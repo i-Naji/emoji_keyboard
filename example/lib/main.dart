@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:emoji_keyboard/emoji_keyboard.dart';
+import 'package:flutter_emoji_keyboard/flutter_emoji_keyboard.dart';
 
 void main() {
   runApp(
@@ -34,14 +34,14 @@ class MainPage extends StatelessWidget {
           TextField(
             enableInteractiveSelection: false,
             onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
+              FocusScope.of(context).requestFocus(FocusNode());
             },
             maxLines: 4,
             controller: controller,
             style: TextStyle(
               fontSize: 28,
             ),
-            decoration: new InputDecoration(
+            decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(20.0),
             ),
           ),

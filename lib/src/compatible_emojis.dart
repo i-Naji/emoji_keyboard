@@ -33,10 +33,10 @@ void _emojiDispatcher(Emoji emoji) {
   }
 }
 
-typedef bool Compatible(Emoji emoji, String systemVersion);
+typedef Compatible = bool Function(Emoji emoji, String systemVersion);
 
 Future<bool> _getCompatibleEmojis(String systemVersion) async {
-  final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
+  final _deviceInfoPlugin = DeviceInfoPlugin();
 
   Compatible isCompatible;
 

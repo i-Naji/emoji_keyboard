@@ -1,30 +1,27 @@
-import 'package:emoji_keyboard/emoji_keyboard.dart';
-
 import 'compatible_emojis.dart';
 import 'base_emoji.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:emoji_keyboard/src/compatible_emojis.dart';
 
 // typedef void _SetCategoryKey(int index, GlobalKey key);
-typedef void _CategoryButtonPressed(int index);
+typedef _CategoryButtonPressed = void Function(int index);
 
 /// Callback function when emoji is pressed will be called.
 /// by [Emoji] argument.
-typedef void OnEmojiSelected(Emoji emoji);
+typedef OnEmojiSelected = void Function(Emoji emoji);
 
-const _categoryHeaderHight = 40.0;
-const _categoryTitleHight = _categoryHeaderHight; // todo: fix scroll issue
+const _categoryHeaderHeight = 40.0;
+const _categoryTitleHeight = _categoryHeaderHeight; // todo: fix scroll issue
 
-/// The Emoji Keyaboad Widget
+/// The Emoji Keyboard Widget
 ///
 /// Contains all emojis in a vertically scrollable grid
 class EmojiKeyboard extends StatelessWidget {
   final bool floatingHeader;
   final int column;
-  final double hight;
+  final double height;
   final OnEmojiSelected onEmojiSelected;
   final CategoryIcons categoryIcons;
   final CategoryTitles categoryTitles;
@@ -52,7 +49,7 @@ class EmojiKeyboard extends StatelessWidget {
   EmojiKeyboard({
     Key key,
     this.column = 8,
-    this.hight = 290.0,
+    this.height = 290.0,
     @required this.onEmojiSelected,
     this.floatingHeader = false,
     this.color = Colors.white,
@@ -75,11 +72,11 @@ class EmojiKeyboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: color,
-      height: hight ??
+      height: height ??
           (MediaQuery.of(context).size.width / column) * 5 +
-              (_categoryHeaderHight + _categoryTitleHight),
+              (_categoryHeaderHeight + _categoryTitleHeight),
       child: NestedScrollView(
-        key: new PageStorageKey<Type>(NestedScrollView),
+        //key: PageStorageKey<Type>(NestedScrollView),
         floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           // These are the slivers that show up in the "outer" scroll view.
@@ -90,13 +87,14 @@ class EmojiKeyboard extends StatelessWidget {
               ),
               sliver: SliverPersistentHeader(
                 delegate: _EmojiKeyboardHeader(
-                  minExtent: _categoryHeaderHight,
-                  maxExtent: _categoryHeaderHight,
+                  minExtent: _categoryHeaderHeight,
+                  maxExtent: _categoryHeaderHeight,
                   categoryIcons: categoryIcons,
                   onClick: onCategoryClick,
                   color: color,
                 ),
                 pinned: !floatingHeader,
+
               ),
             ),
           ];
@@ -114,6 +112,7 @@ class EmojiKeyboard extends StatelessWidget {
                       context,
                     ),
                   ),
+                  // ignore: prefer_spread_collections
                 ]..addAll(
                     List<Widget>.generate(
                       16,
@@ -125,7 +124,7 @@ class EmojiKeyboard extends StatelessWidget {
                           return SliverToBoxAdapter(
                             key: key,
                             child: Container(
-                              height: _categoryTitleHight,
+                              height: _categoryTitleHeight,
                               alignment: Alignment.centerLeft,
                               padding: const EdgeInsets.only(left: 10.0),
                               child: Text(
@@ -182,12 +181,14 @@ class _EmojiKeyboardHeader implements SliverPersistentHeaderDelegate {
     @required this.maxExtent,
     @required this.categoryIcons,
     @required this.onClick,
-    this.color: Colors.white,
+    this.color = Colors.white,
   });
 
   final _CategoryButtonPressed onClick;
   final CategoryIcons categoryIcons;
+  @override
   final double minExtent;
+  @override
   final double maxExtent;
   final Color color;
 

@@ -1,6 +1,6 @@
-# emoji_keyboard_example
+# flutter_emoji_keyboard
 
-Demonstrates how to use the emoji_keyboard package.
+Demonstrates how to use the flutter_emoji_keyboard package.
 
 ## Getting Started
 

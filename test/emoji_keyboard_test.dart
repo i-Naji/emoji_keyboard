@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:emoji_keyboard/src/compatible_emojis.dart';
-import 'package:emoji_keyboard/emoji_keyboard.dart';
+import 'package:flutter_emoji_keyboard/src/compatible_emojis.dart';
+import 'package:flutter_emoji_keyboard/flutter_emoji_keyboard.dart';
 
 void main() {
   test('emojis are compatible', () async {

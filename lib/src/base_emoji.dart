@@ -24,7 +24,7 @@ class Emoji {
       this.limitRangeIOS,
       this.diversityChildren = const []});
 
-  get hasChildren => diversityChildren.isNotEmpty;
+  bool get hasChildren => diversityChildren.isNotEmpty;
 
   /// Check if [emoji] is compatible by The android [systemVersion]
   static bool isAndroidCompatible(Emoji emoji, String systemVersion) {
@@ -39,6 +39,7 @@ class Emoji {
   }
 
   /// return Emoji text
+  @override
   String toString() => text;
 }
 
@@ -50,12 +51,14 @@ bool _versionCompatibility(
 
   final ends = limitRange[0];
 
-  if (ver.compareTo(ends.key) < 0 || ver.compareTo(ends.value) > 0)
+  if (ver.compareTo(ends.key) < 0 || ver.compareTo(ends.value) > 0) {
     return false;
+  }
 
   for (final range in limitRange.sublist(1)) {
-    if (ver.compareTo(range.key) > -1 && ver.compareTo(range.value) < -1)
+    if (ver.compareTo(range.key) > -1 && ver.compareTo(range.value) < -1) {
       return false;
+    }
   }
 
   return true;
