@@ -1,0 +1,20 @@
+name: emoji_keyboard
+description: A Fast and Light ⚡ Emoji Keyboard ✨ Widget.
+version: 0.1.0
+homepage: https://github.com/i-Naji/emoji_keyboard
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  device_info: ^0.4.2+4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+  # https://flutter.dev/custom-fonts/#from-packages
