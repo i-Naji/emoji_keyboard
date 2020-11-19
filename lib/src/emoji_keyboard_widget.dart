@@ -76,8 +76,8 @@ class EmojiKeyboard extends StatelessWidget {
           (MediaQuery.of(context).size.width / column) * 5 +
               (_categoryHeaderHeight + _categoryTitleHeight),
       child: NestedScrollView(
-        //key: PageStorageKey<Type>(NestedScrollView),
-        floatHeaderSlivers: true,
+        key: PageStorageKey<Type>(NestedScrollView),
+        //floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           // These are the slivers that show up in the "outer" scroll view.
           return <Widget>[
@@ -94,7 +94,7 @@ class EmojiKeyboard extends StatelessWidget {
                   color: color,
                 ),
                 pinned: !floatingHeader,
-
+                floating: floatingHeader,
               ),
             ),
           ];
@@ -230,6 +230,9 @@ class _EmojiKeyboardHeader implements SliverPersistentHeaderDelegate {
 
   @override
   OverScrollHeaderStretchConfiguration get stretchConfiguration => null;
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => null;
 }
 
 /// CategoryTitles class that used to define all category titles.

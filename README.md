@@ -20,7 +20,7 @@ EmojiKeyboard(
 It's the callback function with Emoji as argument when emoji on keyboard is pressed.
 
 ---
-Sample Usage [/example](/example) directory.
+Sample Usage [/example](https://github.com/i-Naji/emoji_keyboard/tree/master/example) directory.
 
 <img src="https://media.giphy.com/media/lqMKb4tPI6ZfVS7kqu/giphy.gif" alt="">
 
