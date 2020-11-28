@@ -1,8 +1,10 @@
-import 'dart:io';
+import 'dart:io' show Platform;
 
-import 'base_emoji.dart';
-import 'all_emojis.dart';
 import 'package:device_info/device_info.dart';
+import 'package:flutter/foundation.dart' as foundation;
+
+import 'all_emojis.dart';
+import 'base_emoji.dart';
 
 void _emojiDispatcher(Emoji emoji) {
   switch (emoji.category) {
@@ -40,10 +42,10 @@ Future<bool> _getCompatibleEmojis(String systemVersion) async {
 
   Compatible isCompatible;
 
-  if (Platform.isAndroid) {
+  if (isAndroid()) {
     systemVersion ??= (await _deviceInfoPlugin.androidInfo).version.release;
     isCompatible = Emoji.isAndroidCompatible;
-  } else if (Platform.isIOS) {
+  } else if (isIOS()) {
     systemVersion ??= (await _deviceInfoPlugin.iosInfo).systemVersion;
     isCompatible = Emoji.isIOSCompatible;
   } else {
@@ -61,6 +63,16 @@ Future<bool> _getCompatibleEmojis(String systemVersion) async {
     }
   }
   return true;
+}
+
+/// Returns true if Platform is Android
+bool isAndroid() {
+  return (!foundation.kIsWeb && Platform.isAndroid);
+}
+
+/// Returns true if Platform is IOS
+bool isIOS() {
+  return (!foundation.kIsWeb && Platform.isIOS);
 }
 
 bool _loaded = false;
