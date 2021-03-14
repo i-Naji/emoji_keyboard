@@ -137,7 +137,7 @@ class EmojiKeyboard extends StatelessWidget {
                             key: ValueKey(index),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 8,
+                              crossAxisCount: column,
                             ),
                             delegate: SliverChildListDelegate.fixed(
                               snapshot.data[index ~/ 2].map((Emoji emoji) {
