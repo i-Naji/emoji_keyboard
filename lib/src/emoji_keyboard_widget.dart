@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/rendering.dart';
 import 'package:flutter_emoji_keyboard/src/emoji_keyboard_controller.dart';
 
@@ -139,7 +140,7 @@ class EmojiKeyboard extends StatelessWidget {
                               key: ValueKey(index),
                               gridDelegate:
                                   SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 35),
+                                      maxCrossAxisExtent: 45),
                               delegate: SliverChildBuilderDelegate((_, index2) {
                                 var emoji = snapshot.data[index ~/ 2][index2];
                                 return CupertinoButton(
@@ -149,9 +150,12 @@ class EmojiKeyboard extends StatelessWidget {
                                   child: Center(
                                     child: Text(
                                       '${emoji.text}',
-                                      style: TextStyle(
-                                        fontSize: 26,
-                                      ),
+                                      style: Foundation.kIsWeb
+                                          ? TextStyle(
+                                              fontSize: 26,
+                                              fontFamily: 'fontemoji',
+                                              package: 'flutter_emoji_keyboard')
+                                          : TextStyle(fontSize: 26),
                                     ),
                                   ),
                                   onPressed: () => onEmojiSelected(emoji),
