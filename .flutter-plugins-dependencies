@@ -1,1 +1,81 @@
-{"info":"This is a generated file; do not edit or check into version control.","plugins":{"ios":[{"name":"device_info_plus","path":"/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus-6.0.0/","native_build":true,"dependencies":[]}],"android":[{"name":"device_info_plus","path":"/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus-6.0.0/","native_build":true,"dependencies":[]}],"macos":[{"name":"device_info_plus_macos","path":"/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_macos-5.0.0/","native_build":true,"dependencies":[]}],"linux":[{"name":"device_info_plus_linux","path":"/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_linux-5.0.0/","native_build":false,"dependencies":[]}],"windows":[{"name":"device_info_plus_windows","path":"/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_windows-6.0.0/","native_build":false,"dependencies":[]}],"web":[{"name":"device_info_plus_web","path":"/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_web-5.0.0/","dependencies":[]}]},"dependencyGraph":[{"name":"device_info_plus","dependencies":["device_info_plus_macos","device_info_plus_linux","device_info_plus_web","device_info_plus_windows"]},{"name":"device_info_plus_linux","dependencies":[]},{"name":"device_info_plus_macos","dependencies":[]},{"name":"device_info_plus_web","dependencies":[]},{"name":"device_info_plus_windows","dependencies":[]}],"date_created":"2022-10-15 14:06:20.334910","version":"3.3.4"}
+{
+    "info": "This is a generated file; do not edit or check into version control.",
+    "plugins": {
+        "ios": [
+            {
+                "name": "device_info_plus",
+                "path": "/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus-6.0.0/",
+                "native_build": true,
+                "dependencies": []
+            }
+        ],
+        "android": [
+            {
+                "name": "device_info_plus",
+                "path": "/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus-6.0.0/",
+                "native_build": true,
+                "dependencies": []
+            }
+        ],
+        "macos": [
+            {
+                "name": "device_info_plus_macos",
+                "path": "/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_macos-5.0.0/",
+                "native_build": true,
+                "dependencies": []
+            }
+        ],
+        "linux": [
+            {
+                "name": "device_info_plus_linux",
+                "path": "/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_linux-5.0.0/",
+                "native_build": false,
+                "dependencies": []
+            }
+        ],
+        "windows": [
+            {
+                "name": "device_info_plus_windows",
+                "path": "/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_windows-6.0.0/",
+                "native_build": false,
+                "dependencies": []
+            }
+        ],
+        "web": [
+            {
+                "name": "device_info_plus_web",
+                "path": "/home/remessaonline/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/device_info_plus_web-5.0.0/",
+                "dependencies": []
+            }
+        ]
+    },
+    "dependencyGraph": [
+        {
+            "name": "device_info_plus",
+            "dependencies": [
+                "device_info_plus_macos",
+                "device_info_plus_linux",
+                "device_info_plus_web",
+                "device_info_plus_windows"
+            ]
+        },
+        {
+            "name": "device_info_plus_linux",
+            "dependencies": []
+        },
+        {
+            "name": "device_info_plus_macos",
+            "dependencies": []
+        },
+        {
+            "name": "device_info_plus_web",
+            "dependencies": []
+        },
+        {
+            "name": "device_info_plus_windows",
+            "dependencies": []
+        }
+    ],
+    "date_created": "2022-10-15 14:13:12.382230",
+    "version": "3.3.4"
+}

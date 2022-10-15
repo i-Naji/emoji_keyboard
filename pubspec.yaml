@@ -17,6 +17,8 @@ dev_dependencies:
     sdk: flutter
 
 
-
 flutter:
-  # https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: fontemoji
+      fonts:
+        - asset: fonts/NotoColorEmoji.ttf
