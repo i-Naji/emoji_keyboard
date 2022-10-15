@@ -1,6 +1,6 @@
 import 'dart:io' show Platform;
 
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
 import 'all_emojis.dart';
