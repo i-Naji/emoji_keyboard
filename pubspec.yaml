@@ -21,4 +21,4 @@ flutter:
   fonts:
     - family: fontemoji
       fonts:
-        - asset: fonts/NotoColorEmoji.ttf
+        - asset: fonts/NotoColorEmoji-Regular.ttf
