@@ -32,6 +32,7 @@ class EmojiKeyboard extends StatelessWidget {
   final List<GlobalKey> categoryKeyStore = List(8);
   final EmojiKeyboardController controller;
   final Color color;
+  final TextStyle customTextStyle;
 
   /// Creates a emoji keyboard widget.
   ///
@@ -49,17 +50,18 @@ class EmojiKeyboard extends StatelessWidget {
   /// Keyboard has a header that contain all [categoryIcons] is a row and take postion by pressing the icon,
   ///
   /// If [floatingHeader] is true then keyboard scrolls offscreen header as the user scrolls down the list.
-  EmojiKeyboard(
-      {Key key,
-      this.column = 8,
-      this.height = 290.0,
-      @required this.onEmojiSelected,
-      this.floatingHeader = false,
-      this.categoryIcons = const CategoryIcons(),
-      this.categoryTitles = const CategoryTitles(),
-      this.controller,
-      this.color})
-      : super(key: key);
+  EmojiKeyboard({
+    Key key,
+    this.column = 8,
+    this.height = 290.0,
+    @required this.onEmojiSelected,
+    this.floatingHeader = false,
+    this.categoryIcons = const CategoryIcons(),
+    this.categoryTitles = const CategoryTitles(),
+    this.controller,
+    this.color,
+    this.customTextStyle,
+  }) : super(key: key);
 
   /// Calback function when user press one of categorie in keyboard header
   /// and scroll emojis grid to the postion of that category by it's [index].
@@ -150,12 +152,8 @@ class EmojiKeyboard extends StatelessWidget {
                                   child: Center(
                                     child: Text(
                                       '${emoji.text}',
-                                      style: Foundation.kIsWeb
-                                          ? TextStyle(
-                                              fontSize: 26,
-                                              fontFamily: 'fontemoji',
-                                              package: 'flutter_emoji_keyboard')
-                                          : TextStyle(fontSize: 26),
+                                      style: customTextStyle ??
+                                          TextStyle(fontSize: 26),
                                     ),
                                   ),
                                   onPressed: () => onEmojiSelected(emoji),

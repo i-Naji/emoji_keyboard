@@ -16,9 +16,3 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
-flutter:
-  fonts:
-    - family: fontemoji
-      fonts:
-        - asset: fonts/NotoColorEmoji-Regular.ttf
