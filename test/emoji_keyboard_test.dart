@@ -37,7 +37,7 @@ void main() {
 
 class MyWidget extends StatelessWidget {
   const MyWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
