@@ -35,9 +35,9 @@ void _emojiDispatcher(Emoji emoji) {
   }
 }
 
-typedef Compatible = bool Function(Emoji emoji, String systemVersion);
+typedef Compatible = bool Function(Emoji emoji, String? systemVersion);
 
-Future<bool> _getCompatibleEmojis(String systemVersion) async {
+Future<bool> _getCompatibleEmojis(String? systemVersion) async {
   final _deviceInfoPlugin = DeviceInfoPlugin();
 
   Compatible isCompatible;
@@ -78,7 +78,7 @@ bool isIOS() {
 bool _loaded = false;
 final List<List<Emoji>> _emojis = List.generate(8, (_) => <Emoji>[]);
 
-Future<List<List<Emoji>>> getEmojis({String systemVersion}) async {
+Future<List<List<Emoji>>> getEmojis({String? systemVersion}) async {
   if (!_loaded) {
     _loaded = await _getCompatibleEmojis(systemVersion);
   }

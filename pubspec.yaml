@@ -4,15 +4,15 @@ version: 0.1.3
 homepage: https://github.com/i-Naji/emoji_keyboard
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  device_info_plus: ^6.0.0
+  device_info_plus: ^9.0.0
 
 dev_dependencies:
-  pedantic: ^1.0.0
+  pedantic: ^1.11.1
   flutter_test:
     sdk: flutter
 
