@@ -1,8 +1,10 @@
-import 'dart:io';
+import 'dart:io' show Platform;
 
-import 'base_emoji.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart' as foundation;
+
 import 'all_emojis.dart';
-import 'package:device_info/device_info.dart';
+import 'base_emoji.dart';
 
 void _emojiDispatcher(Emoji emoji) {
   switch (emoji.category) {
@@ -33,17 +35,17 @@ void _emojiDispatcher(Emoji emoji) {
   }
 }
 
-typedef Compatible = bool Function(Emoji emoji, String systemVersion);
+typedef Compatible = bool Function(Emoji emoji, String? systemVersion);
 
-Future<bool> _getCompatibleEmojis(String systemVersion) async {
+Future<bool> _getCompatibleEmojis(String? systemVersion) async {
   final _deviceInfoPlugin = DeviceInfoPlugin();
 
   Compatible isCompatible;
 
-  if (Platform.isAndroid) {
+  if (isAndroid()) {
     systemVersion ??= (await _deviceInfoPlugin.androidInfo).version.release;
     isCompatible = Emoji.isAndroidCompatible;
-  } else if (Platform.isIOS) {
+  } else if (isIOS()) {
     systemVersion ??= (await _deviceInfoPlugin.iosInfo).systemVersion;
     isCompatible = Emoji.isIOSCompatible;
   } else {
@@ -63,10 +65,20 @@ Future<bool> _getCompatibleEmojis(String systemVersion) async {
   return true;
 }
 
+/// Returns true if Platform is Android
+bool isAndroid() {
+  return (!foundation.kIsWeb && Platform.isAndroid);
+}
+
+/// Returns true if Platform is IOS
+bool isIOS() {
+  return (!foundation.kIsWeb && Platform.isIOS);
+}
+
 bool _loaded = false;
 final List<List<Emoji>> _emojis = List.generate(8, (_) => <Emoji>[]);
 
-Future<List<List<Emoji>>> getEmojis({String systemVersion}) async {
+Future<List<List<Emoji>>> getEmojis({String? systemVersion}) async {
   if (!_loaded) {
     _loaded = await _getCompatibleEmojis(systemVersion);
   }

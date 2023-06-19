@@ -1,9 +1,9 @@
-import 'compatible_emojis.dart';
-import 'base_emoji.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_emoji_keyboard/src/emoji_keyboard_controller.dart';
+
+import 'base_emoji.dart';
 
 // typedef void _SetCategoryKey(int index, GlobalKey key);
 typedef _CategoryButtonPressed = void Function(int index);
@@ -25,10 +25,13 @@ class EmojiKeyboard extends StatelessWidget {
   final OnEmojiSelected onEmojiSelected;
   final CategoryIcons categoryIcons;
   final CategoryTitles categoryTitles;
-  final Color color;
 
   final contentKey = UniqueKey();
-  final List<GlobalKey> categoryKeyStore = List(8);
+  final List<GlobalKey?> categoryKeyStore =
+      List.filled(8, null, growable: false);
+  final EmojiKeyboardController? controller;
+  final Color? color;
+  final TextStyle? customTextStyle;
 
   /// Creates a emoji keyboard widget.
   ///
@@ -47,20 +50,22 @@ class EmojiKeyboard extends StatelessWidget {
   ///
   /// If [floatingHeader] is true then keyboard scrolls offscreen header as the user scrolls down the list.
   EmojiKeyboard({
-    Key key,
+    Key? key,
     this.column = 8,
     this.height = 290.0,
-    @required this.onEmojiSelected,
+    required this.onEmojiSelected,
     this.floatingHeader = false,
-    this.color = Colors.white,
     this.categoryIcons = const CategoryIcons(),
     this.categoryTitles = const CategoryTitles(),
+    this.controller,
+    this.color,
+    this.customTextStyle,
   }) : super(key: key);
 
   /// Calback function when user press one of categorie in keyboard header
   /// and scroll emojis grid to the postion of that category by it's [index].
   void onCategoryClick(int index) {
-    Scrollable.ensureVisible(categoryKeyStore[index].currentContext);
+    Scrollable.ensureVisible(categoryKeyStore[index]!.currentContext!);
   }
 
   /// set the [key] of emoji category header by it's [index] in grid.
@@ -72,12 +77,10 @@ class EmojiKeyboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: color,
-      height: height ??
-          (MediaQuery.of(context).size.width / column) * 5 +
-              (_categoryHeaderHeight + _categoryTitleHeight),
+      height: height,
       child: NestedScrollView(
         key: PageStorageKey<Type>(NestedScrollView),
-        //floatHeaderSlivers: true,
+        floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           // These are the slivers that show up in the "outer" scroll view.
           return <Widget>[
@@ -87,12 +90,11 @@ class EmojiKeyboard extends StatelessWidget {
               ),
               sliver: SliverPersistentHeader(
                 delegate: _EmojiKeyboardHeader(
-                  minExtent: _categoryHeaderHeight,
-                  maxExtent: _categoryHeaderHeight,
-                  categoryIcons: categoryIcons,
-                  onClick: onCategoryClick,
-                  color: color,
-                ),
+                    minExtent: _categoryHeaderHeight,
+                    maxExtent: _categoryHeaderHeight,
+                    categoryIcons: categoryIcons,
+                    onClick: onCategoryClick,
+                    color: color),
                 pinned: !floatingHeader,
                 floating: floatingHeader,
               ),
@@ -100,7 +102,7 @@ class EmojiKeyboard extends StatelessWidget {
           ];
         },
         body: FutureBuilder<List<List<Emoji>>>(
-          future: getEmojis(),
+          future: controller!.future,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return CustomScrollView(
@@ -134,13 +136,12 @@ class EmojiKeyboard extends StatelessWidget {
                           );
                         } else {
                           return SliverGrid(
-                            key: ValueKey(index),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 8,
-                            ),
-                            delegate: SliverChildListDelegate.fixed(
-                              snapshot.data[index ~/ 2].map((Emoji emoji) {
+                              key: ValueKey(index),
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 45),
+                              delegate: SliverChildBuilderDelegate((_, index2) {
+                                var emoji = snapshot.data![index ~/ 2][index2];
                                 return CupertinoButton(
                                   key: ValueKey('${emoji.text}'),
                                   pressedOpacity: 0.4,
@@ -148,16 +149,15 @@ class EmojiKeyboard extends StatelessWidget {
                                   child: Center(
                                     child: Text(
                                       '${emoji.text}',
-                                      style: TextStyle(
-                                        fontSize: 26,
-                                      ),
+                                      style: customTextStyle ??
+                                          TextStyle(fontSize: 26),
                                     ),
                                   ),
                                   onPressed: () => onEmojiSelected(emoji),
                                 );
-                              }).toList(),
-                            ),
-                          );
+                              },
+                                  childCount:
+                                      snapshot.data![index ~/ 2].length));
                         }
                       },
                     ),
@@ -176,13 +176,12 @@ class EmojiKeyboard extends StatelessWidget {
 }
 
 class _EmojiKeyboardHeader implements SliverPersistentHeaderDelegate {
-  const _EmojiKeyboardHeader({
-    this.minExtent,
-    @required this.maxExtent,
-    @required this.categoryIcons,
-    @required this.onClick,
-    this.color = Colors.white,
-  });
+  const _EmojiKeyboardHeader(
+      {required this.minExtent,
+      required this.maxExtent,
+      required this.categoryIcons,
+      required this.onClick,
+      this.color});
 
   final _CategoryButtonPressed onClick;
   final CategoryIcons categoryIcons;
@@ -190,24 +189,22 @@ class _EmojiKeyboardHeader implements SliverPersistentHeaderDelegate {
   final double minExtent;
   @override
   final double maxExtent;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      color: categoryIcons.color,
+      color: color,
       height: maxExtent,
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(
             8,
-            (index) => CupertinoButton(
-              pressedOpacity: 0.4,
+            (index) => IconButton(
               padding: EdgeInsets.all(0),
-              borderRadius: BorderRadius.all(Radius.circular(0)),
-              child: Center(
+              icon: Center(
                 child: Icon(
                   categoryIcons[index],
                   size:
@@ -226,10 +223,10 @@ class _EmojiKeyboardHeader implements SliverPersistentHeaderDelegate {
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 
   @override
-  FloatingHeaderSnapConfiguration get snapConfiguration => null;
+  FloatingHeaderSnapConfiguration? get snapConfiguration => null;
 
   @override
-  OverScrollHeaderStretchConfiguration get stretchConfiguration => null;
+  OverScrollHeaderStretchConfiguration? get stretchConfiguration => null;
 
   @override
   dynamic noSuchMethod(Invocation invocation) => null;
@@ -289,7 +286,6 @@ class CategoryTitles {
 
 /// CategoryIcons class that used to define all category icons.
 class CategoryIcons {
-  final Color color;
   final IconData people;
   final IconData nature;
   final IconData food;
@@ -327,7 +323,6 @@ class CategoryIcons {
     this.objects = Icons.lightbulb_outline,
     this.symbols = Icons.euro_symbol,
     this.flags = Icons.flag,
-    this.color = Colors.white,
   });
 
   /// Get category icon by it's [index]
